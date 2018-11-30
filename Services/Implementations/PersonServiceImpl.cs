@@ -1,62 +1,71 @@
 using System.Collections.Generic;
 using System.Threading;
 using RestWithASP_NET.Model;
+using RestWithASP_NET.Model.Context;
+using System;
+using System.Linq;
 
 namespace RestWithASP_NET.Services.Implementations
 {
     public class PersonServiceImpl : IPersonService
     {
-        private volatile int count;
+        private MySqlContext _context;
+
+        public PersonServiceImpl (MySqlContext context){
+            _context = context;
+        }
 
         public Person Create(Person person)
         {
-           return person;
+            try {
+                _context.Add(person);
+                _context.SaveChanges();
+            }
+            catch(Exception ex) {
+                throw ex;
+            }
+            return person;
         }
 
         public void Delete(long id)
         {
-            
+            if(!Exist(id)) return;
+            var result = _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(id));
+            try {
+                 _context.Persons.Remove(result);
+                _context.SaveChanges();
+            }
+            catch(Exception ex) {
+                throw ex;
+            }
         }
 
         public List<Person> FindAll()
         {
-           List<Person> persons = new List<Person>();
-           for (int i = 0; i < 8; i++) {
-            var person = MokPerson(i);
-             persons.Add(person);
-           }
-           return persons;
+           return _context.Persons.ToList();
         }
 
         public Person FindById(long id)
         {
-            return new Person(){
-                Id = IncremetAndGet(),
-                firstName = "Raphael",
-                lastName = "Lopes",
-                address = "teste de endereço",
-                gender = "M"
-            };
+           return _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(id));
         }
 
         public Person Update(Person person)
         {
+            if(!Exist(person.Id.Value)) return new Person();
+            var result = _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(person.Id));
+            try {
+                _context.Entry(result).CurrentValues.SetValues(person);
+                _context.SaveChanges();
+            }
+            catch(Exception ex) {
+                throw ex;
+            }
             return person;
         }
 
-        private Person MokPerson(int i){
-             return new Person(){
-                Id = IncremetAndGet(),
-                firstName = "Person Name " + i,
-                lastName = "Person LastName " + i,
-                address = "Some Address " + i,
-                gender = "Male"
-            };
-        }
-
-        private long IncremetAndGet()
-        {
-            return Interlocked.Increment(ref count);
+        private bool Exist(long Id){
+            return _context.Persons.Any(p => p.Id.Value.Equals(Id));
         }
     }
 }
