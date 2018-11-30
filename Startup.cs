@@ -11,8 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RestWithASP_NET.Model.Context;
-using RestWithASP_NET.Services;
-using RestWithASP_NET.Services.Implementations;
+using RestWithASP_NET.Business;
+using RestWithASP_NET.Business.Implementations;
 using Microsoft.EntityFrameworkCore;
 
 namespace RestWithASP_NET
@@ -34,8 +34,10 @@ namespace RestWithASP_NET
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddApiVersioning();
+            
             //Dependency Injection
-            services.AddScoped<IPersonService, PersonServiceImpl>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

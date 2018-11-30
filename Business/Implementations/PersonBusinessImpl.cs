@@ -5,13 +5,13 @@ using RestWithASP_NET.Model.Context;
 using System;
 using System.Linq;
 
-namespace RestWithASP_NET.Services.Implementations
+namespace RestWithASP_NET.Business.Implementations
 {
-    public class PersonServiceImpl : IPersonService
+    public class PersonBusinessImpl : IPersonBusiness
     {
         private MySqlContext _context;
 
-        public PersonServiceImpl (MySqlContext context){
+        public PersonBusinessImpl (MySqlContext context){
             _context = context;
         }
 
