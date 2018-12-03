@@ -5,13 +5,13 @@ using RestWithASP_NET.Model.Context;
 using System;
 using System.Linq;
 
-namespace RestWithASP_NET.Business.Implementations
+namespace RestWithASP_NET.Repository.Implementations
 {
-    public class PersonBusinessImpl : IPersonBusiness
+    public class PersonRepositoryImpl : IPersonRepository
     {
         private MySqlContext _context;
 
-        public PersonBusinessImpl (MySqlContext context){
+        public PersonRepositoryImpl (MySqlContext context){
             _context = context;
         }
 
@@ -29,7 +29,7 @@ namespace RestWithASP_NET.Business.Implementations
 
         public void Delete(long id)
         {
-            if(!Exist(id)) return;
+            if(!Exists(id)) return;
             var result = _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(id));
             try {
                  _context.Persons.Remove(result);
@@ -52,7 +52,8 @@ namespace RestWithASP_NET.Business.Implementations
 
         public Person Update(Person person)
         {
-            if(!Exist(person.Id.Value)) return new Person();
+            if(!Exists(person.Id.Value)) return null;
+            
             var result = _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(person.Id));
             try {
                 _context.Entry(result).CurrentValues.SetValues(person);
@@ -64,7 +65,7 @@ namespace RestWithASP_NET.Business.Implementations
             return person;
         }
 
-        private bool Exist(long Id){
+        public bool Exists(long Id){
             return _context.Persons.Any(p => p.Id.Value.Equals(Id));
         }
     }
