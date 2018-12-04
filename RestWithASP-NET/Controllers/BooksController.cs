@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RestWithASP_NET.Model;
 using RestWithASP_NET.Business;
+using RestWithASP_NET.Data.VO;
 
 namespace RestWithASP_NET.Controllers
 {
@@ -38,7 +38,7 @@ namespace RestWithASP_NET.Controllers
 
         // POST api/books
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
             return new ObjectResult(_bookBusiness.Create(book));
@@ -46,7 +46,7 @@ namespace RestWithASP_NET.Controllers
 
         // PUT api/books
         [HttpPut]
-        public IActionResult Put([FromBody] Book book)
+        public IActionResult Put([FromBody] BookVO book)
         {
            if (book == null) return BadRequest();
            var updatedbook = _bookBusiness.Update(book);

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RestWithASP_NET.Model;
 using RestWithASP_NET.Business;
+using RestWithASP_NET.Data.VO;
 
 namespace RestWithASP_NET.Controllers
 {
@@ -38,7 +38,7 @@ namespace RestWithASP_NET.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             return new ObjectResult(_personBusiness.Create(person));
@@ -46,7 +46,7 @@ namespace RestWithASP_NET.Controllers
 
         // PUT api/values
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
            if (person == null) return BadRequest();
            var updatedPerson = _personBusiness.Update(person);
