@@ -12,7 +12,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RestWithASP_NET.Model.Context;
 using Microsoft.EntityFrameworkCore;
-
+using Tapioca.HATEOAS;
+using RestWithASP_NET.HyperMedia;
 
 namespace RestWithASP_NET
 {
@@ -54,6 +55,11 @@ namespace RestWithASP_NET
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            //Enricher
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
+            services.AddSingleton(filterOptions);
+
             services.AddApiVersioning();
             
             //Dependency Injection
@@ -76,7 +82,12 @@ namespace RestWithASP_NET
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                  name: "DefaultApi",
+                  template: "{controller=Values}/{id?}"  
+                );
+            });
         }
     }
 }
