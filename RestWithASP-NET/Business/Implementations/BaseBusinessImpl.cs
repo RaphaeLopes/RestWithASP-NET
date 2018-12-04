@@ -9,31 +9,31 @@ using RestWithASP_NET.Repository.Generic;
 
 namespace RestWithASP_NET.Business.Implementations
 {
-    public class PersonBusinessImpl : IPersonBusiness
+    public class BookBusinessImpl : IBookBusiness
     {
-        private IRepository<Person> _repository;
+        private IRepository<Book> _repository;
 
-        public PersonBusinessImpl (IRepository<Person> repository){
+        public BookBusinessImpl (IRepository<Book> repository){
             _repository = repository;
         }
 
-        public List<Person> FindAll()
+        public List<Book> FindAll()
         {
            return _repository.FindAll();
         }
 
-        public Person FindById(long id)
+        public Book FindById(long id)
         {
            return _repository.FindById(id);
         }
-        public Person Create(Person person)
+        public Book Create(Book Book)
         {
-            return _repository.Create(person);
+            return _repository.Create(Book);
         }
 
-        public Person Update(Person person)
+        public Book Update(Book Book)
         {
-           return _repository.Update(person);
+           return _repository.Update(Book);
         }
 
         public void Delete(long id)

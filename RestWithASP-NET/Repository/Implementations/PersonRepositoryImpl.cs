@@ -30,7 +30,7 @@ namespace RestWithASP_NET.Repository.Implementations
         public void Delete(long id)
         {
             if(!Exists(id)) return;
-            var result = _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(id));
+            var result = _context.Persons.SingleOrDefault(p => p.id.Value.Equals(id));
             try {
                  _context.Persons.Remove(result);
                 _context.SaveChanges();
@@ -47,14 +47,14 @@ namespace RestWithASP_NET.Repository.Implementations
 
         public Person FindById(long id)
         {
-           return _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(id));
+           return _context.Persons.SingleOrDefault(p => p.id.Value.Equals(id));
         }
 
         public Person Update(Person person)
         {
-            if(!Exists(person.Id.Value)) return null;
+            if(!Exists(person.id.Value)) return null;
             
-            var result = _context.Persons.SingleOrDefault(p => p.Id.Value.Equals(person.Id));
+            var result = _context.Persons.SingleOrDefault(p => p.id.Value.Equals(person.id));
             try {
                 _context.Entry(result).CurrentValues.SetValues(person);
                 _context.SaveChanges();
@@ -66,7 +66,7 @@ namespace RestWithASP_NET.Repository.Implementations
         }
 
         public bool Exists(long Id){
-            return _context.Persons.Any(p => p.Id.Value.Equals(Id));
+            return _context.Persons.Any(p => p.id.Value.Equals(Id));
         }
     }
 }

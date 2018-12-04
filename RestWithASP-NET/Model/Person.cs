@@ -1,8 +1,9 @@
+using RestWithASP_NET.Model.Base;
+
 namespace RestWithASP_NET.Model
 {
-    public class Person
+    public class Person: BaseEntity
     {
-        public long? Id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string address { get; set; }
