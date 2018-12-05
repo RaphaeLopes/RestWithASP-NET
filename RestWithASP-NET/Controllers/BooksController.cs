@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASP_NET.Business;
 using RestWithASP_NET.Data.VO;
+using Tapioca.HATEOAS;
 
 namespace RestWithASP_NET.Controllers
 {
@@ -22,6 +23,11 @@ namespace RestWithASP_NET.Controllers
 
         // GET api/books
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<BookVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public ActionResult Get()
         {
             return Ok(_bookBusiness.FindAll());
@@ -29,6 +35,11 @@ namespace RestWithASP_NET.Controllers
 
         // GET api/books/5
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(BookVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(int id)
         {
             var book = _bookBusiness.FindById(id);
@@ -38,6 +49,10 @@ namespace RestWithASP_NET.Controllers
 
         // POST api/books
         [HttpPost]
+        [ProducesResponseType((201), Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -46,6 +61,10 @@ namespace RestWithASP_NET.Controllers
 
         // PUT api/books
         [HttpPut]
+        [ProducesResponseType((202), Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BookVO book)
         {
            if (book == null) return BadRequest();
@@ -56,6 +75,10 @@ namespace RestWithASP_NET.Controllers
 
         // DELETE api/books/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(int id)
         {            
             _bookBusiness.Delete(id);

@@ -6,17 +6,17 @@ using Tapioca.HATEOAS;
 
 namespace RestWithASP_NET.HyperMedia
 {
-    public class PersonEnricher : ObjectContentResponseEnricher<PersonVO>
+    public class BookEnricher : ObjectContentResponseEnricher<BookVO>
     {
-        protected override Task EnrichModel(PersonVO content, IUrlHelper urlHelper)
+        protected override Task EnrichModel(BookVO content, IUrlHelper urlHelper)
         {
-            var path = "api/persons/v1";
+            var path = "api/books/v1";
             var url = new {Controller = path, id = content.id};
             //GET
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.GET,
-                Href = urlHelper.Link("DefaultApi",url),
+                Href = urlHelper.Link("DefaultApi", url),
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultGet
             });
@@ -24,7 +24,7 @@ namespace RestWithASP_NET.HyperMedia
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.POST,
-                Href = urlHelper.Link("DefaultApi",url),
+                Href = urlHelper.Link("DefaultApi", url),
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
@@ -32,7 +32,7 @@ namespace RestWithASP_NET.HyperMedia
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.PUT,
-                Href = urlHelper.Link("DefaultApi",url),
+                Href = urlHelper.Link("DefaultApi", url),
                 Rel = RelationType.self,
                 Type = ResponseTypeFormat.DefaultPost
             });
@@ -40,7 +40,7 @@ namespace RestWithASP_NET.HyperMedia
             content.Links.Add(new HyperMediaLink()
             {
                 Action = HttpActionVerb.DELETE,
-                Href = urlHelper.Link("DefaultApi",url),
+                Href = urlHelper.Link("DefaultApi", url),
                 Rel = RelationType.self,
                 Type = "int",
             });
